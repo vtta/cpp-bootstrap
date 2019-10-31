@@ -4,6 +4,7 @@ glm/0.9.9.6
 fmt/6.0.0
 stb/20190512@conan/stable
 glad/0.1.29@bincrafters/stable
+gtest/1.10.0
 
 [options]
 glad:profile=core

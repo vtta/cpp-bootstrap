@@ -132,6 +132,7 @@ tmp/
 
 .metadata
 bin/
+!tests/bin/
 tmp/
 *.tmp
 *.bak

@@ -10,9 +10,8 @@ include (cmake/doxygen.cmake)
 include (cmake/format.cmake)
 include (cmake/tidy.cmake)
 include (cmake/cppcheck.cmake)
+include (cmake/tests.cmake)
 
 include_directories ("${PROJECT_SOURCE_DIR}/include")
 add_subdirectory ("${PROJECT_SOURCE_DIR}/src")
 add_subdirectory ("${PROJECT_SOURCE_DIR}/tests")
-
-include (cmake/tests.cmake)
