@@ -1,0 +1,154 @@
+language: cpp
+
+env:
+  global:
+    - CMAKE_OPTIONS="-DOPTION_BUILD_EXAMPLES=On"
+
+matrix:
+  include:
+
+    - os: osx
+      osx_image: xcode11.2
+      env: CMAKE_CONFIGURATION=Release BUILD_DIR=build
+      addons:
+        homebrew:
+          packages:
+          - conan
+          - llvm
+      before_install:
+      - export PATH="$PATH:/usr/local/opt/llvm/bin"
+
+    - os: osx
+      osx_image: xcode11.2
+      env: CMAKE_CONFIGURATION=Debug BUILD_DIR=build-debug
+      addons:
+        homebrew:
+          packages:
+          - conan
+          - llvm
+      before_install:
+      - export PATH="$PATH:/usr/local/opt/llvm/bin"
+
+    - os: linux
+      dist: bionic
+      compiler: clang
+      env: CMAKE_CONFIGURATION=Release BUILD_DIR=build
+      addons:
+        apt:
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main'
+            key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
+          packages:
+          - cmake
+          - g++-8
+          - clang
+          - clang-format
+          - clang-tidy
+          - libc++-dev
+          - lld
+      before_install:
+      - pip install --user conan
+
+    - os: linux
+      dist: bionic
+      compiler: clang
+      env: CMAKE_CONFIGURATION=Debug BUILD_DIR=build-debug
+      addons:
+        apt:
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main'
+            key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
+          packages:
+          - cmake
+          - g++-8
+          - clang
+          - clang-format
+          - clang-tidy
+          - libc++-dev
+          - lld
+      before_install:
+      - pip install --user conan
+
+    - os: linux
+      dist: bionic
+      compiler: gcc
+      env:
+        - CMAKE_CONFIGURATION=Release BUILD_DIR=build
+        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+      addons:
+        apt:
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main'
+            key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
+          packages:
+          - cmake
+          - g++-8
+          - clang
+          - clang-format
+          - clang-tidy
+          - libc++-dev
+          - lld
+      before_install:
+      - pip install --user conan
+
+    - os: linux
+      dist: bionic
+      compiler: gcc
+      env:
+        - CMAKE_CONFIGURATION=Debug BUILD_DIR=build-debug
+        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+      addons:
+        apt:
+          sources:
+          - sourceline: 'ppa:ubuntu-toolchain-r/test'
+          - sourceline: 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main'
+            key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
+          packages:
+          - cmake
+          - g++-8
+          - clang
+          - clang-format
+          - clang-tidy
+          - libc++-dev
+          - lld
+      before_install:
+      - pip install --user conan
+
+    - os: windows
+      env:
+        - BUILD_DIR=build-debug
+        - CMAKE_CONFIGURATION=Debug
+      before_install:
+        - choco install conan
+        - export PATH="$PATH:/c/Program Files/CMake/bin"
+        - export PATH="$PATH:/c/Program Files/Conan/conan"
+
+    - os: windows
+      env:
+        - BUILD_DIR=build
+        - CMAKE_CONFIGURATION=Release
+      before_install:
+        - choco install conan
+        - export PATH="$PATH:/c/Program Files/CMake/bin"
+        - export PATH="$PATH:/c/Program Files/Conan/conan"
+
+install:
+  - conan user
+  - conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
+
+before_script:
+  - eval "${MATRIX_EVAL}"
+  - echo $PATH | tr -s ":" "\n"
+  - cmake --version
+  - conan --version
+  - ${CC} --version
+  - ${CXX} --version
+
+script:
+  - mkdir -p $BUILD_DIR
+  - cd $BUILD_DIR
+  - cmake ..
+  - make all
