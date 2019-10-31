@@ -1,5 +1,7 @@
 # cpp-bootstrap
 
+<a href="http://www.wtfpl.net/"><img src="http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl.svg" height="20" alt="WTFPL" /></a> [![Build Status](https://travis-ci.org/vtta/cpp-bootstrap.svg?branch=master)](https://travis-ci.org/vtta/cpp-bootstrap)
+
 A CMake template for modern C++ projects with Conan as dependency manager
 
 # Feature
