@@ -6,16 +6,7 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
         -g \
         -pedantic \
         -pedantic-errors \
-        -Wall \
-        -Wextra \
-        -Wshadow \
-        -Weffc++ \
-        -Wconversion \
-        -Wsign-conversion \
-        -Wpointer-arith \
-        -Wcast-qual \
-        -Wformat=2 \
-        -Wold-style-cast")
+        -Wall")
 
 # check for supported compiler versions
 set (IS_GNU_COMPILER ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"))
@@ -30,4 +21,4 @@ if (${IS_CLANG_COMPILER})
 endif ()
 
 # add some flags for the Release, Debug, and DebugSan modes
-set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ggdb3 -Og -fsanitize=undefined -fsanitize=address")
+set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ggdb3 -O0 -fsanitize=undefined -fsanitize=address")
