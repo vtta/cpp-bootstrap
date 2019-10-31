@@ -122,18 +122,20 @@ matrix:
         - BUILD_DIR=build-debug
         - CMAKE_CONFIGURATION=Debug
       before_install:
-        - choco install conan
+        - choco install python3 --installargs='TargetDir="C:\Python3"'
         - export PATH="$PATH:/c/Program Files/CMake/bin"
-        - export PATH="$PATH:/c/Program Files/Conan/conan"
+        - export PATH="/c/Python3:/c/Python3/Scripts:/c/Python3/Lib:$PATH"
+        - pip install conan
 
     - os: windows
       env:
         - BUILD_DIR=build
         - CMAKE_CONFIGURATION=Release
       before_install:
-        - choco install conan
+        - choco install python3 --installargs='TargetDir="C:\Python3"'
         - export PATH="$PATH:/c/Program Files/CMake/bin"
-        - export PATH="$PATH:/c/Program Files/Conan/conan"
+        - export PATH="/c/Python3:/c/Python3/Scripts:/c/Python3/Lib:$PATH"
+        - pip install conan
 
 install:
   - conan user
@@ -151,4 +153,4 @@ script:
   - mkdir -p $BUILD_DIR
   - cd $BUILD_DIR
   - cmake ..
-  - make all
+  - cmake --build .
