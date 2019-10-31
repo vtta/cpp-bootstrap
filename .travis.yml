@@ -14,9 +14,6 @@ matrix:
         homebrew:
           packages:
           - conan
-          - llvm
-      before_install:
-      - export PATH="$PATH:/usr/local/opt/llvm/bin"
 
     - os: osx
       osx_image: xcode11.2
@@ -25,9 +22,6 @@ matrix:
         homebrew:
           packages:
           - conan
-          - llvm
-      before_install:
-      - export PATH="$PATH:/usr/local/opt/llvm/bin"
 
     - os: linux
       dist: bionic
