@@ -116,9 +116,14 @@ matrix:
         - BUILD_DIR=build-debug
         - CMAKE_CONFIGURATION=Debug
       before_install:
+        - choco install llvm
+        - choco install mingw
+        - choco install make
         - choco install python3 --installargs='TargetDir="C:\Python3"'
         - export PATH="$PATH:/c/Program Files/CMake/bin"
         - export PATH="/c/Python3:/c/Python3/Scripts:/c/Python3/Lib:$PATH"
+        - export PATH="/c/Program Files/LLVM/bin:$PATH"
+        - export PATH="/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin:$PATH"
         - pip install conan
 
     - os: windows
@@ -126,9 +131,14 @@ matrix:
         - BUILD_DIR=build
         - CMAKE_CONFIGURATION=Release
       before_install:
+        - choco install llvm
+        - choco install mingw
+        - choco install make
         - choco install python3 --installargs='TargetDir="C:\Python3"'
         - export PATH="$PATH:/c/Program Files/CMake/bin"
         - export PATH="/c/Python3:/c/Python3/Scripts:/c/Python3/Lib:$PATH"
+        - export PATH="/c/Program Files/LLVM/bin:$PATH"
+        - export PATH="/c/ProgramData/chocolatey/lib/mingw/tools/install/mingw64/bin:$PATH"
         - pip install conan
 
 install:
@@ -146,5 +156,5 @@ before_script:
 script:
   - mkdir -p $BUILD_DIR
   - cd $BUILD_DIR
-  - cmake ..
+  - cmake .. -G "Unix Makefiles"
   - cmake --build .
